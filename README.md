@@ -82,7 +82,7 @@ writes the prompt. This needs a vision-capable text encoder; Qwen3-VL qualifies.
 
 Connect the generator's `prompt` output to **Save Unique Prompt** and set `file_path`.
 
-- Relative paths are inside the ComfyUI `output` folder. The default is `output/krea_prompts/prompts.txt`. Absolute paths such as `D:\prompts\krea.txt` also work.
+- Enter just a folder and file name, such as `kreaprompts\prompts1.txt`, and it's saved inside the ComfyUI `output` folder. A leading `\` is fine, and `.txt` is added if you leave the extension off. A full path with a drive letter, such as `D:\prompts\krea.txt`, saves there instead.
 - The file and any missing folders are created on first use.
 - Prompts are separated by a blank line. A prompt is skipped if the file already contains it, ignoring differences in spacing.
 - The node shows the file path, the prompt count, whether the latest prompt was added, and the newest 100 prompts.

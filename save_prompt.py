@@ -24,9 +24,15 @@ BLANK_LINE = re.compile(r"\n[ \t]*\n")
 
 
 def resolve_path(file_path):
+    """Paths are relative to the ComfyUI output folder unless they include a drive (C:\\...)."""
     path = os.path.expandvars(os.path.expanduser(file_path.strip().strip('"')))
-    if not os.path.isabs(path):
-        path = os.path.join(BASE_DIR, path)
+    # On Windows only a drive or network share makes a path absolute; a leading "\" would
+    # otherwise mean the root of the current drive.
+    absolute = bool(os.path.splitdrive(path)[0]) if os.name == "nt" else os.path.isabs(path)
+    if not absolute:
+        path = os.path.join(BASE_DIR, path.lstrip("/\\"))
+    if not os.path.splitext(path)[1]:
+        path += ".txt"
     return os.path.normpath(path)
 
 
@@ -52,7 +58,8 @@ class KreaSaveUniquePrompt:
                     "STRING",
                     {
                         "default": "krea_prompts/prompts.txt",
-                        "tooltip": "Text file to save prompts to. Relative paths are inside the ComfyUI output folder. "
+                        "tooltip": "Folder\\file inside the ComfyUI output folder, e.g. kreaprompts\\prompts1.txt "
+                                   "(.txt is added if omitted). A full path with a drive letter saves elsewhere. "
                                    "Created if it doesn't exist.",
                     },
                 ),
