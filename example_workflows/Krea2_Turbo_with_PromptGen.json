@@ -1,0 +1,1776 @@
+{
+  "id": "b5e9214a-5a1e-44c7-a412-2c163daf7372",
+  "revision": 0,
+  "last_node_id": 348,
+  "last_link_id": 596,
+  "nodes": [
+    {
+      "id": 204,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        406.0785717145135,
+        -748.2237342681667
+      ],
+      "size": [
+        225,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 573
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            305
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "ConditioningZeroOut",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      }
+    },
+    {
+      "id": 203,
+      "type": "VAEDecode",
+      "pos": [
+        789.599852182686,
+        -1547.540802597474
+      ],
+      "size": [
+        230,
+        100
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 307
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 308
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            465
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      }
+    },
+    {
+      "id": 85,
+      "type": "SeedGenerator",
+      "pos": [
+        438.80522993466343,
+        -1035.4139894827883
+      ],
+      "size": [
+        301.86591267793256,
+        108.62913450743667
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            326
+          ]
+        },
+        {
+          "name": "seed+1",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "RES4LYF",
+        "ver": "419de2d7c78f415dde9aa352a7231820ebfc17a4",
+        "Node name for S&R": "SeedGenerator",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "seed": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        908677511326050,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "seed": 908677511326050,
+        "control_after_generate": "randomize"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 202,
+      "type": "KSampler",
+      "pos": [
+        428.9401641714422,
+        -1559.4736629604129
+      ],
+      "size": [
+        335.5,
+        474
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 583
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 571
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 305
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 306
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 326
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            307
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "seed": true,
+            "steps": true,
+            "cfg": true,
+            "sampler_name": true,
+            "scheduler": true,
+            "denoise": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        378545000884364,
+        "randomize",
+        10,
+        1,
+        "er_sde",
+        "sgm_uniform",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 378545000884364,
+        "control_after_generate": "randomize",
+        "steps": 10,
+        "cfg": 1,
+        "sampler_name": "er_sde",
+        "scheduler": "sgm_uniform",
+        "denoise": 1
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 254,
+      "type": "Save Image (LoraManager)",
+      "pos": [
+        800.8039417379957,
+        -1364.1251796276622
+      ],
+      "size": [
+        1002.0625,
+        1236.125
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 465
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-lora-manager",
+        "ver": "ce8a95abf79861c40a40be6b5666cd15d2fa1aad",
+        "Node name for S&R": "Save Image (LoraManager)",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "filename_prefix": true,
+            "file_format": true,
+            "lossless_webp": true,
+            "quality": true,
+            "embed_workflow": true,
+            "save_with_metadata": true,
+            "add_counter_to_filename": true,
+            "save_as_recipe": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "%date:yyyy-MM-dd%/S2",
+        "png",
+        false,
+        100,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "%date:yyyy-MM-dd%/S2",
+        "file_format": "png",
+        "lossless_webp": false,
+        "quality": 100,
+        "webp_method": true,
+        "jpeg_subsampling": true,
+        "embed_workflow": true,
+        "save_with_metadata": false,
+        "add_loras_to_prompt": false,
+        "add_counter_to_filename": true,
+        "save_as_recipe": false
+      }
+    },
+    {
+      "id": 213,
+      "type": "VAELoader",
+      "pos": [
+        -1517.2073280304824,
+        -1006.5477856059136
+      ],
+      "size": [
+        450,
+        120
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            308
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "qwen_image_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/vae/qwen_image_vae.safetensors",
+            "directory": "vae"
+          }
+        ],
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "vae_name": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      }
+    },
+    {
+      "id": 214,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -1516.6556843972514,
+        -832.9174933250785
+      ],
+      "size": [
+        446.6875,
+        118
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 324
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 325
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            306
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "EmptyLatentImage",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "width": true,
+            "height": true,
+            "batch_size": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 1024,
+        "height": 1024,
+        "batch_size": 1
+      }
+    },
+    {
+      "id": 218,
+      "type": "CLIPLoader",
+      "pos": [
+        -1519.1106483091314,
+        -1225.971136274958
+      ],
+      "size": [
+        450,
+        170
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            575
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "qwen3vl_4b_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ],
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "clip_name": true,
+            "type": true,
+            "device": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "qwen3vl_4b_heretic_int8_convrot.safetensors",
+        "krea2",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_4b_heretic_int8_convrot.safetensors",
+        "type": "krea2",
+        "device": "default"
+      }
+    },
+    {
+      "id": 221,
+      "type": "UNETLoader",
+      "pos": [
+        -1519.5279389518666,
+        -1420.9377693333545
+      ],
+      "size": [
+        450,
+        140
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            574
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "krea2_turbo_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/diffusion_models/krea2_turbo_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "krea2\\intorealismKrea2_v50.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "krea2\\intorealismKrea2_v50.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 49,
+      "type": "ResolutionSelector",
+      "pos": [
+        -1464.4073644942948,
+        -659.535011594683
+      ],
+      "size": [
+        341.6875,
+        162
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            324
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            325
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "ResolutionSelector",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "aspect_ratio": true,
+            "megapixels": true,
+            "multiple": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "3:4 (Portrait Standard)",
+        1,
+        8
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "3:4 (Portrait Standard)",
+        "megapixels": 1,
+        "multiple": 8
+      }
+    },
+    {
+      "id": 333,
+      "type": "KreaPromptGenerator",
+      "pos": [
+        341.6604867056318,
+        -792.1210191507873
+      ],
+      "size": [
+        400,
+        432
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 576
+        },
+        {
+          "name": "attributes",
+          "shape": 7,
+          "type": "KREA_ATTRIBUTES",
+          "link": 569
+        },
+        {
+          "name": "instructions",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        },
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 578
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 581
+        }
+      ],
+      "outputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "links": [
+            571,
+            573
+          ]
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            572
+          ]
+        },
+        {
+          "name": "llm_request",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaPromptGenerator",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "",
+        1004815111250707,
+        "randomize",
+        80,
+        200,
+        512,
+        0.7,
+        64,
+        0.95,
+        0.05,
+        1.05,
+        "pose"
+      ],
+      "widgets_values_named": {
+        "keywords": "",
+        "seed": 1004815111250707,
+        "control_after_generate": "randomize",
+        "min_words": 80,
+        "max_words": 200,
+        "max_length": 512,
+        "temperature": 0.7,
+        "top_k": 64,
+        "top_p": 0.95,
+        "min_p": 0.05,
+        "repetition_penalty": 1.05,
+        "reference_use": "pose"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 334,
+      "type": "KreaFemalePerson",
+      "pos": [
+        -990.6358454964736,
+        -1558.8342759968214
+      ],
+      "size": [
+        400,
+        1000
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "attributes",
+          "shape": 7,
+          "type": "KREA_ATTRIBUTES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "attributes",
+          "type": "KREA_ATTRIBUTES",
+          "links": [
+            589,
+            590
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaFemalePerson",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "36-40 years old",
+        "American",
+        "Curvy",
+        "5ft4",
+        "150lbs",
+        "none",
+        "Teardrop",
+        "Large",
+        "F",
+        "Heart-shaped",
+        "Square Oval",
+        "Natural Green (muted or mixed with hazel/gold)",
+        "Almond",
+        "shadowed softly under the brow",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "Wavy",
+        "Mid-back length",
+        "Dark Brown",
+        "Fair (light beige, creamy)",
+        "subtle skin texture",
+        "visible pores",
+        "none",
+        "none",
+        "none",
+        "none",
+        "natural imperfections",
+        "none",
+        "none",
+        "none",
+        "none",
+        ""
+      ],
+      "widgets_values_named": {
+        "age": "36-40 years old",
+        "nationality": "American",
+        "body_type": "Curvy",
+        "height": "5ft4",
+        "body_weight": "150lbs",
+        "waist_size": "none",
+        "breast_shape": "Teardrop",
+        "breast_size": "Large",
+        "breast_cup_size": "F",
+        "bum_size": "Heart-shaped",
+        "face_shape": "Square Oval",
+        "eyes_color": "Natural Green (muted or mixed with hazel/gold)",
+        "eye_shape": "Almond",
+        "eyes_details": "shadowed softly under the brow",
+        "iris_details": "none",
+        "circular_iris": "none",
+        "circular_pupil": "none",
+        "nose_shape": "none",
+        "nose_size": "none",
+        "lip_shape": "none",
+        "lip_color": "none",
+        "makeup": "none",
+        "facial_expression": "none",
+        "hair_style": "Wavy",
+        "hair_length": "Mid-back length",
+        "hair_color": "Dark Brown",
+        "skin_tone": "Fair (light beige, creamy)",
+        "skin_details": "subtle skin texture",
+        "skin_pores": "visible pores",
+        "tanned_skin": "none",
+        "freckles": "none",
+        "dimples": "none",
+        "moles": "none",
+        "skin_imperfections": "natural imperfections",
+        "skin_acne": "none",
+        "nipple_appearance": "none",
+        "areola_appearance": "none",
+        "tattoo": "none",
+        "custom_person": ""
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 335,
+      "type": "KreaFemaleFashion",
+      "pos": [
+        -570.2291618617138,
+        -1557.3218710864464
+      ],
+      "size": [
+        400,
+        1192
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "attributes",
+          "shape": 7,
+          "type": "KREA_ATTRIBUTES",
+          "link": 589
+        }
+      ],
+      "outputs": [
+        {
+          "name": "attributes",
+          "type": "KREA_ATTRIBUTES",
+          "links": [
+            567,
+            591
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaFemaleFashion",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "none",
+        "Topless",
+        "none",
+        "none",
+        "Nude",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "No Underwear",
+        "none",
+        "none",
+        "Fishnet Stockings",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "naked"
+      ],
+      "widgets_values_named": {
+        "fashion_aesthetic": "none",
+        "tops": "Topless",
+        "tops_color": "none",
+        "tops_material": "none",
+        "pants": "Nude",
+        "pants_color": "none",
+        "pants_material": "none",
+        "dresses": "none",
+        "dresses_color": "none",
+        "dresses_material": "none",
+        "womens_suits": "none",
+        "womens_suits_primary_color": "none",
+        "womens_suits_accent_color": "none",
+        "underwear": "No Underwear",
+        "underwear_color": "none",
+        "underwear_material": "none",
+        "legs": "Fishnet Stockings",
+        "legs_color": "none",
+        "legs_material": "none",
+        "capes": "none",
+        "capes_color": "none",
+        "capes_material": "none",
+        "hats": "none",
+        "hats_color": "none",
+        "womens_shoes": "none",
+        "womens_shoe_color": "none",
+        "womens_shoe_material": "none",
+        "womens_gloves": "none",
+        "womens_gloves_color": "none",
+        "womens_gloves_material": "none",
+        "womens_belt": "none",
+        "womens_belt_color": "none",
+        "womens_belt_material": "none",
+        "womens_glasses": "none",
+        "womens_glasses_color": "none",
+        "womens_mask": "none",
+        "womens_mask_color": "none",
+        "womens_mask_material": "none",
+        "necklace": "none",
+        "earrings": "none",
+        "bracelet": "none",
+        "ring": "none",
+        "watches": "none",
+        "watches_color": "none",
+        "fingernail_style": "none",
+        "nail_color": "none",
+        "custom_fashion": "naked"
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 336,
+      "type": "KreaFemaleActions",
+      "pos": [
+        -145.2854365596695,
+        -1546.7361327848146
+      ],
+      "size": [
+        400,
+        304
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "attributes",
+          "shape": 7,
+          "type": "KREA_ATTRIBUTES",
+          "link": 567
+        }
+      ],
+      "outputs": [
+        {
+          "name": "attributes",
+          "type": "KREA_ATTRIBUTES",
+          "links": [
+            568,
+            592
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaFemaleActions",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        ""
+      ],
+      "widgets_values_named": {
+        "standing_pose": "none",
+        "sitting_pose": "none",
+        "kneeling_pose": "none",
+        "laying_down_pose": "none",
+        "hand_placement": "none",
+        "leg_placement": "none",
+        "head_placement": "none",
+        "props": "none",
+        "props_color": "none",
+        "custom_action": ""
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 337,
+      "type": "KreaScene",
+      "pos": [
+        -140.74862564417322,
+        -1182.282662039235
+      ],
+      "size": [
+        400,
+        400
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "attributes",
+          "shape": 7,
+          "type": "KREA_ATTRIBUTES",
+          "link": 568
+        }
+      ],
+      "outputs": [
+        {
+          "name": "attributes",
+          "type": "KREA_ATTRIBUTES",
+          "links": [
+            569,
+            593
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaScene",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "none",
+        "none",
+        "Night",
+        "none",
+        "none",
+        "none",
+        "none",
+        "medium",
+        "random",
+        "none",
+        "none",
+        "none",
+        "none",
+        "Amatuer photo, bedroom, taken with Iphone"
+      ],
+      "widgets_values_named": {
+        "artistic_style": "none",
+        "location": "none",
+        "time_of_day": "Night",
+        "season": "none",
+        "weather": "none",
+        "light_type": "none",
+        "light_quality": "none",
+        "camera_shot": "medium",
+        "camera_view": "random",
+        "camera_horizontal_angle": "none",
+        "camera_vertical_angle": "none",
+        "camera_lens": "none",
+        "camera_model": "none",
+        "custom_scene": "Amatuer photo, bedroom, taken with Iphone"
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 338,
+      "type": "KreaSaveUniquePrompt",
+      "pos": [
+        -104.76438752497022,
+        -608.2126230919457
+      ],
+      "size": [
+        400,
+        300
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 572
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            594
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KreaSaveUniquePrompt",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "C:\\comfy\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\krea_prompts\\prompts2.txt\n6 prompt(s) saved. Latest: added.\n\nA candid phone photo taken at night in a softly lit bedroom, capturing a 36- to 40-year-old American woman standing in a medium three-quarter view, her body angled slightly toward the camera with one hand resting at her side, fingers gently curled. She has fair, light beige skin with subtle texture and visible pores, adorned with natural imperfections that add authenticity; her square oval face features almond-shaped eyes with muted green-hazel-gold tones, softly shadowed under the brow, framed by mid-back-length dark brown wavy hair. Her curvy frame—5ft4, 150lbs—is defined by teardrop-shaped large breasts (F cup) and heart-shaped buttocks, dressed in nothing but nude-colored bottoms and fishnet stockings, bare and naked from the waist down. The scene is intimate and amateurish, shot on an iPhone with shallow depth of field, ambient lighting casting warm, soft glow from a nearby lamp, highlighting her silhouette against a blurred background of bedding and furniture.\n\n**Prompt:**\nA candid phone photo captures a 36-40 year old American woman with fair, light beige skin and subtle pores, standing in a bedroom at night. She has dark brown, wavy mid-back length hair and natural green eyes with softly shadowed brows, framed by a square oval face. Her curvy, heart-shaped buttocks and teardrop-shaped large breasts—size F—are visible as she’s topless, wearing only nude fishnet stockings. Her arms are relaxed, one slightly bent, the other hanging loosely, revealing a tattoo that reads “I love you to the moon.” The image is taken from a back-right quarter view, medium framing, using an iPhone, with soft ambient lighting casting a warm glow across her body. The background shows vertical blinds and a pale blue wall, blurred slightly for depth of field. The scene feels intimate and amateur, capturing a moment of quiet confidence without any clothing underneath or additional accessories.\n\nA medium shot, candid phone photo taken at night in a softly lit bedroom, capturing an adult woman aged 36–40, American, with a curvy frame and 5ft4 height, weighing 150lbs. She has fair, light beige skin with subtle texture and visible pores, natural imperfections, and dark brown wavy hair mid-back length framing her shoulders. Her face is square oval with almond-shaped, natural green eyes softened by gentle shadow under the brow. She’s topless, wearing only nude fishnet stockings, with no underwear visible, and her body is fully exposed from the chest down to the thighs. Her breasts are large, teardrop-shaped, and F-cup, nestled in a loose, rust-orange ribbed dress with small white floral patterns that drapes over her hips. She stands slightly angled toward the camera, one hand resting lightly on her hip, the other near her thigh, as if caught mid-movement. The background is blurred but hints at vertical blinds and a plain wall, illuminated by warm ambient light from a window or lamp, casting soft shadows. Shot at eye level with an iPhone, the frame crops her torso and upper legs, with shallow depth of field emphasizing her form against the muted gray backdrop. Amateur photo, intimate and unposed, capturing the quiet energy of a personal moment.\n\nA candid phone photo captures a 36- to 40-year-old American woman standing in a bedroom at night, her body angled slightly to the side as if caught mid-movement, with soft ambient light illuminating her fair, creamy skin that shows subtle texture and natural imperfections. Her dark brown, wavy hair falls to mid-back length, framing a square oval face with almond-shaped eyes of muted green mixed with hazel or gold, softly shadowed under the brow. She’s topless, wearing only nude-colored bottoms and fishnet stockings, her large teardrop-shaped breasts in an F-cup resting naturally against her torso, her heart-shaped buttocks gently curved. A tattoo reading “I love you to” is visible on her inner right arm, partially obscured by the fabric of her dress. The shot is taken from a medium front view with a standard iPhone lens, capturing her full figure against a blurred background, with shallow depth of field emphasizing her form under warm, low-light conditions typical of nighttime interiors.\n\nA medium candid phone photo captures a 36- to 40-year-old American woman with a curvy frame and fair, light beige skin that shows subtle texture and natural imperfections, standing in a bedroom at night. Her dark brown, wavy hair falls mid-back, framing her square oval face with almond-shaped eyes that have muted green hues softened by gentle shadow beneath the brows. She is topless, wearing only nude fishnet stockings, with no underwear visible, her body fully exposed in a relaxed, back-left quarter view. The fabric of her rust orange ribbed dress—adorned with delicate white floral patterns—is draped loosely over her torso, its ruched texture catching the ambient glow from a window behind her, casting soft, cool-toned light across her form. Her pose is casual, slightly angled, with one hand resting near her hip as if adjusting herself, while the other hangs loosely at her side. The background is minimal, featuring vertical blinds and a plain wall, blurred by shallow depth of field, emphasizing her silhouette against the dimly lit room. Shot on an iPhone, the image carries an amateur, intimate feel, capturing the quiet intimacy of the moment.\n\nA medium shot, candid phone photo taken at night in a softly lit bedroom, capturing an adult woman aged 36-40 with American ethnicity and a curvy build standing at 5ft4, weighing 150lbs. Her face is square oval with natural green eyes—muted and mixed with hazel or gold tones, almond-shaped and softly shadowed under the brow—framed by wavy dark brown hair mid-back length. Her fair, light beige skin shows subtle texture and visible pores with natural imperfections. She’s topless, wearing only nude fishnet stockings, no underwear, her body draped in a rust orange ribbed dress with small white floral patterns that clings to her form, revealing teardrop-shaped large breasts (F-cup) and heart-shaped buttocks. The image is framed from a front-left quarter angle, close enough to capture her torso and legs, with shallow depth of field blurring the background into muted gray. The lighting is soft, cool-toned ambient glow from a window, casting gentle shadows across her skin. Taken with an iPhone, the photo feels intimate and amateur, capturing her relaxed posture as she stands slightly angled, hands resting lightly on her hips, hair falling loosely around her shoulders."
+      ],
+      "widgets_values_named": {
+        "file_path": "C:\\comfy\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\krea_prompts\\prompts2.txt\n6 prompt(s) saved. Latest: added.\n\nA candid phone photo taken at night in a softly lit bedroom, capturing a 36- to 40-year-old American woman standing in a medium three-quarter view, her body angled slightly toward the camera with one hand resting at her side, fingers gently curled. She has fair, light beige skin with subtle texture and visible pores, adorned with natural imperfections that add authenticity; her square oval face features almond-shaped eyes with muted green-hazel-gold tones, softly shadowed under the brow, framed by mid-back-length dark brown wavy hair. Her curvy frame—5ft4, 150lbs—is defined by teardrop-shaped large breasts (F cup) and heart-shaped buttocks, dressed in nothing but nude-colored bottoms and fishnet stockings, bare and naked from the waist down. The scene is intimate and amateurish, shot on an iPhone with shallow depth of field, ambient lighting casting warm, soft glow from a nearby lamp, highlighting her silhouette against a blurred background of bedding and furniture.\n\n**Prompt:**\nA candid phone photo captures a 36-40 year old American woman with fair, light beige skin and subtle pores, standing in a bedroom at night. She has dark brown, wavy mid-back length hair and natural green eyes with softly shadowed brows, framed by a square oval face. Her curvy, heart-shaped buttocks and teardrop-shaped large breasts—size F—are visible as she’s topless, wearing only nude fishnet stockings. Her arms are relaxed, one slightly bent, the other hanging loosely, revealing a tattoo that reads “I love you to the moon.” The image is taken from a back-right quarter view, medium framing, using an iPhone, with soft ambient lighting casting a warm glow across her body. The background shows vertical blinds and a pale blue wall, blurred slightly for depth of field. The scene feels intimate and amateur, capturing a moment of quiet confidence without any clothing underneath or additional accessories.\n\nA medium shot, candid phone photo taken at night in a softly lit bedroom, capturing an adult woman aged 36–40, American, with a curvy frame and 5ft4 height, weighing 150lbs. She has fair, light beige skin with subtle texture and visible pores, natural imperfections, and dark brown wavy hair mid-back length framing her shoulders. Her face is square oval with almond-shaped, natural green eyes softened by gentle shadow under the brow. She’s topless, wearing only nude fishnet stockings, with no underwear visible, and her body is fully exposed from the chest down to the thighs. Her breasts are large, teardrop-shaped, and F-cup, nestled in a loose, rust-orange ribbed dress with small white floral patterns that drapes over her hips. She stands slightly angled toward the camera, one hand resting lightly on her hip, the other near her thigh, as if caught mid-movement. The background is blurred but hints at vertical blinds and a plain wall, illuminated by warm ambient light from a window or lamp, casting soft shadows. Shot at eye level with an iPhone, the frame crops her torso and upper legs, with shallow depth of field emphasizing her form against the muted gray backdrop. Amateur photo, intimate and unposed, capturing the quiet energy of a personal moment.\n\nA candid phone photo captures a 36- to 40-year-old American woman standing in a bedroom at night, her body angled slightly to the side as if caught mid-movement, with soft ambient light illuminating her fair, creamy skin that shows subtle texture and natural imperfections. Her dark brown, wavy hair falls to mid-back length, framing a square oval face with almond-shaped eyes of muted green mixed with hazel or gold, softly shadowed under the brow. She’s topless, wearing only nude-colored bottoms and fishnet stockings, her large teardrop-shaped breasts in an F-cup resting naturally against her torso, her heart-shaped buttocks gently curved. A tattoo reading “I love you to” is visible on her inner right arm, partially obscured by the fabric of her dress. The shot is taken from a medium front view with a standard iPhone lens, capturing her full figure against a blurred background, with shallow depth of field emphasizing her form under warm, low-light conditions typical of nighttime interiors.\n\nA medium candid phone photo captures a 36- to 40-year-old American woman with a curvy frame and fair, light beige skin that shows subtle texture and natural imperfections, standing in a bedroom at night. Her dark brown, wavy hair falls mid-back, framing her square oval face with almond-shaped eyes that have muted green hues softened by gentle shadow beneath the brows. She is topless, wearing only nude fishnet stockings, with no underwear visible, her body fully exposed in a relaxed, back-left quarter view. The fabric of her rust orange ribbed dress—adorned with delicate white floral patterns—is draped loosely over her torso, its ruched texture catching the ambient glow from a window behind her, casting soft, cool-toned light across her form. Her pose is casual, slightly angled, with one hand resting near her hip as if adjusting herself, while the other hangs loosely at her side. The background is minimal, featuring vertical blinds and a plain wall, blurred by shallow depth of field, emphasizing her silhouette against the dimly lit room. Shot on an iPhone, the image carries an amateur, intimate feel, capturing the quiet intimacy of the moment.\n\nA medium shot, candid phone photo taken at night in a softly lit bedroom, capturing an adult woman aged 36-40 with American ethnicity and a curvy build standing at 5ft4, weighing 150lbs. Her face is square oval with natural green eyes—muted and mixed with hazel or gold tones, almond-shaped and softly shadowed under the brow—framed by wavy dark brown hair mid-back length. Her fair, light beige skin shows subtle texture and visible pores with natural imperfections. She’s topless, wearing only nude fishnet stockings, no underwear, her body draped in a rust orange ribbed dress with small white floral patterns that clings to her form, revealing teardrop-shaped large breasts (F-cup) and heart-shaped buttocks. The image is framed from a front-left quarter angle, close enough to capture her torso and legs, with shallow depth of field blurring the background into muted gray. The lighting is soft, cool-toned ambient glow from a window, casting gentle shadows across her skin. Taken with an iPhone, the photo feels intimate and amateur, capturing her relaxed posture as she stands slightly angled, hands resting lightly on her hips, hair falling loosely around her shoulders."
+      }
+    },
+    {
+      "id": 339,
+      "type": "Lora Loader Stack (rgthree)",
+      "pos": [
+        -1302.0216629406968,
+        -1780.2710069444945
+      ],
+      "size": [
+        282.542578125,
+        246
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 574
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 575
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            582
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            576
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "13b4399c00b5ef5a97b1b6800fc1185874740f5d",
+        "Node name for S&R": "Lora Loader Stack (rgthree)",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "krea2\\RealisticSnapshotKrea2.safetensors",
+        1,
+        "None",
+        1,
+        "None",
+        1,
+        "None",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_01": "krea2\\RealisticSnapshotKrea2.safetensors",
+        "strength_01": 1,
+        "lora_02": "None",
+        "strength_02": 1,
+        "lora_03": "None",
+        "strength_03": 1,
+        "lora_04": "None",
+        "strength_04": 1
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 340,
+      "type": "LoadImage",
+      "pos": [
+        -1448.4967372733963,
+        -387.40510272768074
+      ],
+      "size": [
+        646.925651927103,
+        612.7708276783269
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            578,
+            595
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            580
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.38.2",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "image": "clipspace-painted-masked-1791585401920.png [input]"
+      },
+      "widgets_values": [
+        "HairyPussy_2026-10-07-20-23-24_2e4wt7trxujg1.jpeg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "HairyPussy_2026-10-07-20-23-24_2e4wt7trxujg1.jpeg",
+        "upload": "image"
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 341,
+      "type": "InvertMask",
+      "pos": [
+        -773.917921521328,
+        -245.26619054028987
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 580
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            581,
+            596
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.38.2",
+        "Node name for S&R": "InvertMask",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 342,
+      "type": "ComfyUI-Krea2T-Enhancer",
+      "pos": [
+        -121.25641863596809,
+        -1715.3608897701747
+      ],
+      "size": [
+        280.5669921875,
+        106
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 582
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            583
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-krea2t-enhancer",
+        "ver": "1.1.2",
+        "Node name for S&R": "ComfyUI-Krea2T-Enhancer",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        true,
+        1,
+        false
+      ],
+      "widgets_values_named": {
+        "enabled": true,
+        "strength": 1,
+        "debug": false
+      }
+    },
+    {
+      "id": 348,
+      "type": "Fast Bypasser (rgthree)",
+      "pos": [
+        -555.0094960626234,
+        -2014.1044115206969
+      ],
+      "size": [
+        342.21431286667575,
+        342
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "Krea Prompt - Female Person",
+          "type": "*",
+          "link": 590
+        },
+        {
+          "dir": 3,
+          "name": "Krea Prompt - Female Fashion",
+          "type": "*",
+          "link": 591
+        },
+        {
+          "dir": 3,
+          "name": "Krea Prompt - Female Actions",
+          "type": "*",
+          "link": 592
+        },
+        {
+          "dir": 3,
+          "name": "Krea Prompt - Scene",
+          "type": "*",
+          "link": 593
+        },
+        {
+          "dir": 3,
+          "name": "Krea Prompt - Save Unique Prompt",
+          "type": "*",
+          "link": 594
+        },
+        {
+          "dir": 3,
+          "name": "Load Image",
+          "type": "*",
+          "link": 595
+        },
+        {
+          "dir": 3,
+          "name": "Invert Mask",
+          "type": "*",
+          "link": 596
+        },
+        {
+          "dir": 3,
+          "name": "",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "toggleRestriction": "default",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    }
+  ],
+  "links": [
+    [
+      305,
+      204,
+      0,
+      202,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      306,
+      214,
+      0,
+      202,
+      3,
+      "LATENT"
+    ],
+    [
+      307,
+      202,
+      0,
+      203,
+      0,
+      "LATENT"
+    ],
+    [
+      308,
+      213,
+      0,
+      203,
+      1,
+      "VAE"
+    ],
+    [
+      324,
+      49,
+      0,
+      214,
+      0,
+      "INT"
+    ],
+    [
+      325,
+      49,
+      1,
+      214,
+      1,
+      "INT"
+    ],
+    [
+      326,
+      85,
+      0,
+      202,
+      4,
+      "INT"
+    ],
+    [
+      465,
+      203,
+      0,
+      254,
+      0,
+      "IMAGE"
+    ],
+    [
+      567,
+      335,
+      0,
+      336,
+      0,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      568,
+      336,
+      0,
+      337,
+      0,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      569,
+      337,
+      0,
+      333,
+      1,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      571,
+      333,
+      0,
+      202,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      572,
+      333,
+      1,
+      338,
+      0,
+      "STRING"
+    ],
+    [
+      573,
+      333,
+      0,
+      204,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      574,
+      221,
+      0,
+      339,
+      0,
+      "MODEL"
+    ],
+    [
+      575,
+      218,
+      0,
+      339,
+      1,
+      "CLIP"
+    ],
+    [
+      576,
+      339,
+      1,
+      333,
+      0,
+      "CLIP"
+    ],
+    [
+      578,
+      340,
+      0,
+      333,
+      3,
+      "IMAGE"
+    ],
+    [
+      580,
+      340,
+      1,
+      341,
+      0,
+      "MASK"
+    ],
+    [
+      581,
+      341,
+      0,
+      333,
+      4,
+      "MASK"
+    ],
+    [
+      582,
+      339,
+      0,
+      342,
+      0,
+      "MODEL"
+    ],
+    [
+      583,
+      342,
+      0,
+      202,
+      0,
+      "MODEL"
+    ],
+    [
+      589,
+      334,
+      0,
+      335,
+      0,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      590,
+      334,
+      0,
+      348,
+      0,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      591,
+      335,
+      0,
+      348,
+      1,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      592,
+      336,
+      0,
+      348,
+      2,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      593,
+      337,
+      0,
+      348,
+      3,
+      "KREA_ATTRIBUTES"
+    ],
+    [
+      594,
+      338,
+      0,
+      348,
+      4,
+      "STRING"
+    ],
+    [
+      595,
+      340,
+      0,
+      348,
+      5,
+      "IMAGE"
+    ],
+    [
+      596,
+      341,
+      0,
+      348,
+      6,
+      "MASK"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Group",
+      "bounding": [
+        -750.0432193545854,
+        -1542.8727155262409,
+        140,
+        80
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5550929625481833,
+      "offset": [
+        1899.794024796335,
+        1656.9048680981587
+      ]
+    },
+    "frontendVersion": "1.53.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "anomalous_hashes": {
+      "230_Tools\\depth-control-lora.safetensors": {
+        "hash": "",
+        "size": 861995928
+      },
+      "221_krea2_turbo_fp8_scaled.safetensors": {
+        "hash": "EB4DD8C612CFD10F64F25B057E6E6BBCB5737C94A7372177E456DBF7579502F1",
+        "size": 13141730784
+      }
+    },
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "groupNodes": {}
+  },
+  "extensions": {
+    "widget_idx_map": {
+      "85": {
+        "seed": 0
+      },
+      "202": {
+        "seed": 0,
+        "sampler_name": 4,
+        "scheduler": 5
+      },
+      "319": {
+        "seed": 0,
+        "sampler_name": 4,
+        "scheduler": 5
+      },
+      "323": {
+        "seed": 0
+      }
+    },
+    "seed_widgets": {
+      "85": 0,
+      "202": 0,
+      "319": 0,
+      "323": 0
+    }
+  },
+  "version": 0.4
+}
