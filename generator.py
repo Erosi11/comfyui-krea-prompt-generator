@@ -185,17 +185,46 @@ ECHO_MARKERS = (
 )
 
 
-def looks_like_echo(text, system_prompt):
-    """True if the output repeats the instructions or the selection list instead of being a prompt."""
+def echo_reason(text, system_prompt):
+    """Why the output looks like repeated instructions/selections instead of a prompt, or None if it looks fine."""
+    if not text:
+        return "empty output"
     low = text.lower()
-    if any(marker in low for marker in ECHO_MARKERS):
-        return True
+    for marker in ECHO_MARKERS:
+        if marker in low:
+            return f'contains "{marker}"'
     for line in system_prompt.splitlines():
         line = line.strip().lstrip("-0123456789. ").lower()
         if len(line) > 30 and line in low:
-            return True
+            return f'repeats instruction "{line[:60]}"'
     # Two or more "- Label: value" lines means the selection list was copied.
-    return len(re.findall(r"^\s*-\s*[^:\n]{1,40}:", text, re.MULTILINE)) >= 2
+    if len(re.findall(r"^\s*-\s*[^:\n]{1,40}:", text, re.MULTILINE)) >= 2:
+        return 'contains a "- Label: value" list'
+    return None
+
+
+def looks_like_echo(text, system_prompt):
+    return echo_reason(text, system_prompt) is not None
+
+
+def reset_generation_state():
+    """Drop ComfyUI's cached CUDA graphs and cast buffers between generate() calls.
+
+    ComfyUI records CUDA graphs for the decode step on the model's layers and only clears them after
+    a node finishes (execution.py -> cleanup_prefetch_queues). A second generate() in the same node
+    would replay graphs recorded against the previous call's freed KV cache, causing a CUDA
+    "scatter gather kernel index out of bounds" crash. This mirrors what execution.py does between nodes.
+    """
+    try:
+        import comfy.memory_management
+        import comfy.model_management
+        import comfy.model_prefetch
+    except ImportError:
+        return  # older ComfyUI without the model compiler: nothing to reset
+    if not getattr(comfy.memory_management, "aimdo_enabled", False):
+        return
+    comfy.model_prefetch.cleanup_prefetch_queues()
+    comfy.model_management.reset_cast_buffers()
 
 
 def call_supported(fn, *args, **kwargs):
@@ -297,6 +326,8 @@ class KreaPromptGenerator:
 
         prompt = ""
         for attempt in range(MAX_ATTEMPTS):
+            if attempt > 0:
+                reset_generation_state()
             generated_ids = call_supported(
                 clip.generate,
                 tokens,
@@ -312,10 +343,11 @@ class KreaPromptGenerator:
                 mtp=True,
             )
             prompt = strip_reasoning(clip.decode(generated_ids))
-            if prompt and not looks_like_echo(prompt, system_prompt):
+            reason = echo_reason(prompt, system_prompt)
+            if reason is None:
                 break
-            print(f"[KreaPromptGenerator] Attempt {attempt + 1}/{MAX_ATTEMPTS} returned instructions or nothing "
-                  f"instead of a prompt.")
+            preview = " ".join(prompt.split())[:400]
+            print(f"[KreaPromptGenerator] Attempt {attempt + 1}/{MAX_ATTEMPTS} rejected ({reason}). Output was: {preview}")
             if temperature <= 0:
                 break  # greedy decoding would just repeat the same output
         if prompt and looks_like_echo(prompt, system_prompt):
@@ -324,7 +356,9 @@ class KreaPromptGenerator:
         if not prompt:
             raise RuntimeError("Krea Prompt Generator: the LLM returned an empty prompt. Try another seed or a larger max_length.")
 
-        # Encode like CLIPTextEncode so the output plugs straight into the sampler.
+        # Encode like CLIPTextEncode so the output plugs straight into the sampler. Core ComfyUI does
+        # generation and encoding in separate nodes with a graph cleanup in between; do the same.
+        reset_generation_state()
         conditioning = clip.encode_from_tokens_scheduled(clip.tokenize(prompt))
         return (conditioning, prompt, request)
 

@@ -6,8 +6,8 @@ outputs ready-to-use **CONDITIONING**, plus the prompt as a **STRING**.
 
 ## Requirements
 
-- A recent ComfyUI build that includes the core **Generate Text** (`TextGenerate`) node.
-  This custom node uses the same `clip.generate` API.
+- ComfyUI **v0.26.0 or newer**, the first release with the `krea2` text encoder type. The
+  core **Generate Text** node, whose `clip.generate` API this node uses, arrived earlier, in v0.15.0.
 - A text encoder that can generate text, loaded with **CLIPLoader**. For Krea 2, use
   `qwen3vl_4b_fp8_scaled.safetensors` with type `krea2`.
 - No extra Python packages.
